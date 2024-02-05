@@ -14,7 +14,7 @@
         </div>
         <ul class="sidebar-menu" data-widget="tree">
             <li>
-                <a href="#">
+                <a href="{{ route('dashboard') }}">
                     <i class="fa fa-h-square"></i> <span>Home</span>              
                 </a>
             </li>
