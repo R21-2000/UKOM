@@ -18,6 +18,8 @@
                     <i class="fa fa-h-square"></i> <span>Home</span>              
                 </a>
             </li>
+
+            @if (auth()->user()->level == 1)
                 <li class="header">MAIN NAVIGATION</li>                
             <li>
                 <a href="{{ route('kategori.index') }}">
