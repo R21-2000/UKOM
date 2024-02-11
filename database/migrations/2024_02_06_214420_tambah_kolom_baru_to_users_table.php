@@ -18,7 +18,6 @@ class TambahKolomBaruToUsersTable extends Migration
             $table->tinyInteger('level')->default(0)->after('foto');
         });
     }
-
     /**
      * Reverse the migrations.
      *

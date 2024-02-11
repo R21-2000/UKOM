@@ -1,12 +1,9 @@
 <?php
-
 namespace App\Http\Controllers;
-
 use App\Models\Kategori;
 use Illuminate\Http\Request;
 use App\Models\Produk;
 use PDF;
-
 class ProdukController extends Controller
 {
     /**
@@ -17,23 +14,20 @@ class ProdukController extends Controller
     public function index()
     {
         $kategori = Kategori::all()->pluck('nama_kategori', 'id_kategori');
-
         return view('produk.index', compact('kategori'));
     }
-
     public function data()
     {
         $produk = Produk::leftJoin('kategori', 'kategori.id_kategori', 'produk.id_kategori')
             ->select('produk.*', 'nama_kategori')
             // ->orderBy('kode_produk', 'asc')
             ->get();
-
         return datatables()
             ->of($produk)
             ->addIndexColumn()
             ->addColumn('select_all', function ($produk) {
                 return '
-                    <input type="checkbox" name="id_produk[]" value="'. $produk->id_produk .'">
+                <input type="checkbox" name="id_produk[]" value="'. $produk->id_produk .'">
                 ';
             })
             ->addColumn('kode_produk', function ($produk) {
@@ -48,6 +42,9 @@ class ProdukController extends Controller
             ->addColumn('stok', function ($produk) {
                 return format_uang($produk->stok);
             })
+            ->addColumn('foto', function ($produk) {
+                return format_uang($produk->foto);
+            })
             ->addColumn('aksi', function ($produk) {
                 return '
                 <div class="btn-group">
@@ -59,7 +56,6 @@ class ProdukController extends Controller
             ->rawColumns(['aksi', 'kode_produk', 'select_all'])
             ->make(true);
     }
-
     /**
      * Show the form for creating a new resource.
      *
@@ -67,9 +63,8 @@ class ProdukController extends Controller
      */
     public function create()
     {
-        //
+        
     }
-
     /**
      * Store a newly created resource in storage.
      *

@@ -73,6 +73,7 @@
                     <i class="fa fa-sliders"></i> <span>Perusahaan</span>              
                 </a>
             </li>
+            @endif
       </ul>
     </section>
     <!-- /.sidebar -->

@@ -36,6 +36,7 @@
                             <th>Harga Jual</th>
                             <th>Diskon</th>
                             <th>Stok</th>
+                            <th>Foto</th>
                             <th width="15%"><i class="fa fa-cog"></i></th>
                         </thead>
                     </table>
@@ -44,7 +45,6 @@
         </div>
     </div>
 </div>
-
 @includeIf('produk.form')
 @endsection
 
@@ -72,6 +72,7 @@
                 {data: 'harga_jual'},
                 {data: 'diskon'},
                 {data: 'stok'},
+                {data: 'foto', searchable: false, sortable: false},
                 {data: 'aksi', searchable: false, sortable: false},
             ]
         });

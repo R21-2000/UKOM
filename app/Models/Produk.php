@@ -8,7 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class Produk extends Model
 {
     use HasFactory;
-
     protected $table = 'produk';
     protected $primaryKey = 'id_produk';
     protected $guarded = [];
