@@ -13,6 +13,7 @@ use App\Http\Controllers\{
     SettingController,
     SupplierController,
     UserController,
+    LoginController,
 };
 use Illuminate\Support\Facades\Route;
 /*
@@ -28,6 +29,8 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return redirect()->route('login');
 });
+Route::get('/login', [LoginController::class, 'index'])->name('login');
+
 Route::group(['middleware' => 'auth'], function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
