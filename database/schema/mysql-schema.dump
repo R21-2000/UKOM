@@ -1,0 +1,296 @@
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+DROP TABLE IF EXISTS `failed_jobs`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `failed_jobs` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `uuid` varchar(255) NOT NULL,
+  `connection` text NOT NULL,
+  `queue` text NOT NULL,
+  `payload` longtext NOT NULL,
+  `exception` longtext NOT NULL,
+  `failed_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `failed_jobs_uuid_unique` (`uuid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `kategori`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `kategori` (
+  `id_kategori` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `nama_kategori` varchar(255) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id_kategori`),
+  UNIQUE KEY `kategori_nama_kategori_unique` (`nama_kategori`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `member`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `member` (
+  `id_member` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `kode_member` varchar(255) NOT NULL,
+  `nama` varchar(255) NOT NULL,
+  `alamat` text DEFAULT NULL,
+  `telepon` varchar(255) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id_member`),
+  UNIQUE KEY `member_kode_member_unique` (`kode_member`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `migrations`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `migrations` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `migration` varchar(255) NOT NULL,
+  `batch` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `password_resets`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `password_resets` (
+  `email` varchar(255) NOT NULL,
+  `token` varchar(255) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  KEY `password_resets_email_index` (`email`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `pembelian`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `pembelian` (
+  `id_pembelian` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `id_supplier` int(10) unsigned NOT NULL,
+  `total_item` int(11) NOT NULL,
+  `total_harga` int(11) NOT NULL,
+  `diskon` tinyint(4) NOT NULL DEFAULT 0,
+  `bayar` int(11) NOT NULL DEFAULT 0,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id_pembelian`),
+  UNIQUE KEY `id_supplier` (`id_supplier`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `pembelian_detail`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `pembelian_detail` (
+  `id_pembelian_detail` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `id_pembelian` int(10) unsigned NOT NULL,
+  `id_produk` int(10) unsigned NOT NULL,
+  `harga_beli` int(11) NOT NULL,
+  `jumlah` int(11) NOT NULL,
+  `subtotal` int(11) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id_pembelian_detail`),
+  UNIQUE KEY `id_pembelian` (`id_pembelian`),
+  UNIQUE KEY `id_produk` (`id_produk`),
+  CONSTRAINT `pembelian_detail_ibfk_1` FOREIGN KEY (`id_produk`) REFERENCES `produk` (`id_produk`),
+  CONSTRAINT `pembelian_detail_ibfk_2` FOREIGN KEY (`id_pembelian`) REFERENCES `pembelian` (`id_pembelian`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `pengeluaran`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `pengeluaran` (
+  `id_pengeluaran` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `deskripsi` text NOT NULL,
+  `nominal` int(11) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id_pengeluaran`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `penjualan`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `penjualan` (
+  `id_penjualan` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `id_member` int(10) unsigned DEFAULT NULL,
+  `total_item` int(11) NOT NULL,
+  `total_harga` int(11) NOT NULL,
+  `diskon` tinyint(4) NOT NULL DEFAULT 0,
+  `bayar` int(11) NOT NULL DEFAULT 0,
+  `diterima` int(11) NOT NULL DEFAULT 0,
+  `id_users` bigint(20) unsigned NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id_penjualan`),
+  UNIQUE KEY `id_users` (`id_users`),
+  UNIQUE KEY `id_member` (`id_member`),
+  CONSTRAINT `penjualan_ibfk_1` FOREIGN KEY (`id_member`) REFERENCES `member` (`id_member`),
+  CONSTRAINT `penjualan_ibfk_2` FOREIGN KEY (`id_users`) REFERENCES `users` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `penjualan_detail`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `penjualan_detail` (
+  `id_penjualan_detail` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `id_penjualan` int(10) unsigned NOT NULL,
+  `id_produk` int(10) unsigned NOT NULL,
+  `harga_jual` int(11) NOT NULL,
+  `jumlah` int(11) NOT NULL,
+  `diskon` tinyint(4) NOT NULL DEFAULT 0,
+  `subtotal` int(11) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id_penjualan_detail`),
+  UNIQUE KEY `id_penjualan` (`id_penjualan`),
+  UNIQUE KEY `id_produk` (`id_produk`),
+  CONSTRAINT `penjualan_detail_ibfk_1` FOREIGN KEY (`id_penjualan`) REFERENCES `penjualan` (`id_penjualan`),
+  CONSTRAINT `penjualan_detail_ibfk_2` FOREIGN KEY (`id_produk`) REFERENCES `produk` (`id_produk`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `personal_access_tokens`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `personal_access_tokens` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `tokenable_type` varchar(255) NOT NULL,
+  `tokenable_id` bigint(20) unsigned NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `token` varchar(64) NOT NULL,
+  `abilities` text DEFAULT NULL,
+  `last_used_at` timestamp NULL DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `personal_access_tokens_token_unique` (`token`),
+  KEY `personal_access_tokens_tokenable_type_tokenable_id_index` (`tokenable_type`,`tokenable_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `produk`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `produk` (
+  `id_produk` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `id_kategori` int(10) unsigned NOT NULL,
+  `kode_produk` varchar(255) NOT NULL,
+  `nama_produk` varchar(255) NOT NULL,
+  `merk` varchar(255) DEFAULT NULL,
+  `harga_beli` int(11) NOT NULL,
+  `diskon` tinyint(4) NOT NULL DEFAULT 0,
+  `harga_jual` int(11) NOT NULL,
+  `stok` int(11) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `foto` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id_produk`),
+  UNIQUE KEY `produk_nama_produk_unique` (`nama_produk`),
+  UNIQUE KEY `produk_kode_produk_unique` (`kode_produk`),
+  KEY `produk_id_kategori_foreign` (`id_kategori`),
+  CONSTRAINT `produk_id_kategori_foreign` FOREIGN KEY (`id_kategori`) REFERENCES `kategori` (`id_kategori`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `sessions`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `sessions` (
+  `id` varchar(255) NOT NULL,
+  `id_users` bigint(20) unsigned DEFAULT NULL,
+  `ip_address` varchar(45) DEFAULT NULL,
+  `user_agent` text DEFAULT NULL,
+  `payload` text NOT NULL,
+  `last_activity` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `sessions_user_id_index` (`id_users`),
+  KEY `sessions_last_activity_index` (`last_activity`),
+  CONSTRAINT `sessions_ibfk_1` FOREIGN KEY (`id_users`) REFERENCES `users` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `setting`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `setting` (
+  `id_setting` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `nama_perusahaan` varchar(255) NOT NULL,
+  `alamat` text DEFAULT NULL,
+  `telepon` varchar(255) NOT NULL,
+  `tipe_nota` tinyint(4) NOT NULL,
+  `diskon` smallint(6) NOT NULL DEFAULT 0,
+  `path_logo` varchar(255) NOT NULL,
+  `path_kartu_member` varchar(255) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id_setting`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `supplier`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `supplier` (
+  `id_supplier` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `nama` varchar(255) NOT NULL,
+  `alamat` text DEFAULT NULL,
+  `telepon` varchar(255) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id_supplier`),
+  CONSTRAINT `supplier_ibfk_1` FOREIGN KEY (`id_supplier`) REFERENCES `pembelian` (`id_supplier`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `users`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `users` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `email_verified_at` timestamp NULL DEFAULT NULL,
+  `password` varchar(255) NOT NULL,
+  `foto` varchar(255) DEFAULT NULL,
+  `level` tinyint(4) NOT NULL DEFAULT 0,
+  `two_factor_secret` text DEFAULT NULL,
+  `two_factor_recovery_codes` text DEFAULT NULL,
+  `remember_token` varchar(100) DEFAULT NULL,
+  `current_team_id` bigint(20) unsigned DEFAULT NULL,
+  `profile_photo_path` text DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `users_email_unique` (`email`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+INSERT INTO `migrations` VALUES (1,'2014_10_12_000000_create_users_table',1);
+INSERT INTO `migrations` VALUES (2,'2014_10_12_100000_create_password_resets_table',1);
+INSERT INTO `migrations` VALUES (3,'2014_10_12_200000_add_two_factor_columns_to_users_table',1);
+INSERT INTO `migrations` VALUES (4,'2019_08_19_000000_create_failed_jobs_table',1);
+INSERT INTO `migrations` VALUES (5,'2019_12_14_000001_create_personal_access_tokens_table',1);
+INSERT INTO `migrations` VALUES (6,'2024_02_06_214420_tambah_kolom_baru_to_users_table',1);
+INSERT INTO `migrations` VALUES (7,'2024_02_06_214537_make_kategori_table',1);
+INSERT INTO `migrations` VALUES (8,'2024_02_06_214655_make_produk_table',1);
+INSERT INTO `migrations` VALUES (9,'2024_02_06_214800_make_member_table',1);
+INSERT INTO `migrations` VALUES (10,'2024_02_06_214848_make_supplier_table',1);
+INSERT INTO `migrations` VALUES (11,'2024_02_06_214926_make_pembelian_table',1);
+INSERT INTO `migrations` VALUES (12,'2024_02_06_215013_make_pembelian_detail_table',1);
+INSERT INTO `migrations` VALUES (13,'2024_02_06_215055_make_penjualan_table',1);
+INSERT INTO `migrations` VALUES (14,'2024_02_06_215132_make_penjualan_detail_table',1);
+INSERT INTO `migrations` VALUES (15,'2024_02_06_215219_make_setting_table',1);
+INSERT INTO `migrations` VALUES (16,'2024_02_06_215305_make_pengeluaran_table',1);
+INSERT INTO `migrations` VALUES (17,'2024_02_06_215347_make_sessions_table',1);
+INSERT INTO `migrations` VALUES (18,'2024_02_06_215433_add_foreign_key_to_produk_table',1);
+INSERT INTO `migrations` VALUES (19,'2024_02_06_215529_add_kode_produk_to_produk_table',1);
+INSERT INTO `migrations` VALUES (20,'2024_02_06_215615_add_diskon_to_setting_table',1);
+INSERT INTO `migrations` VALUES (21,'2024_02_06_215748_edit_id_member_to_penjualan_table',1);
+INSERT INTO `migrations` VALUES (22,'2024_02_11_145903_add_foto_to_produk_table',1);
+INSERT INTO `migrations` VALUES (23,'2024_02_12_143433_make_sessions_table',2);
