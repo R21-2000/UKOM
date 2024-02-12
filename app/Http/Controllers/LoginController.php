@@ -9,7 +9,7 @@ class LoginController extends Controller
 {
     public function index()
     {
-        return view('views.auth.login');
+        return view('auth.login');
     }
 
     public function authenticate(Request $request)
@@ -23,7 +23,6 @@ class LoginController extends Controller
             $request->session()->regenerate();
             if (Auth::user()) {
                 return redirect()->route('index');
-                // return dd(Auth::user()->role);
             }
         }
         return redirect()->route('login');
