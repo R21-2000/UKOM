@@ -66,7 +66,7 @@ class PenjualanController extends Controller
         $penjualan->diskon = 0;
         $penjualan->bayar = 0;
         $penjualan->diterima = 0;
-        $penjualan->id_user = auth()->id();
+        $penjualan->id_users = auth()->id();
         $penjualan->save();
 
         session(['id_penjualan' => $penjualan->id_penjualan]);
