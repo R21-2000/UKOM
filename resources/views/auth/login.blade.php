@@ -11,17 +11,17 @@
 
         <form action="{{ route('login') }}" method="post" class="form-login">
             @csrf
-            <div class="form-group has-feedback @error('name') has-error @enderror">
-                <input type="name" name="name" class="form-control" placeholder="Isi nama disini" required value="{{ old('name') }}" autofocus>
-                <span class="glyphicon glyphicon-user form-control-feedback"></span>
-                @error('name')
+            <div class="form-group has-feedback @error('email') has-error @enderror">
+                <input type="email" name="email" class="form-control" placeholder="Email" required value="{{ old('email') }}" autofocus>
+                <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+                @error('email')
                     <span class="help-block">{{ $message }}</span>
                 @else
                 <span class="help-block with-errors"></span>
                 @enderror
             </div>
             <div class="form-group has-feedback @error('password') has-error @enderror">
-                <input type="password" name="password" class="form-control" placeholder="Isi password disini" required>
+                <input type="password" name="password" class="form-control" placeholder="Password" required>
                 <span class="glyphicon glyphicon-lock form-control-feedback"></span>
                 @error('password')
                     <span class="help-block">{{ $message }}</span>

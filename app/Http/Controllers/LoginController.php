@@ -15,17 +15,17 @@ class LoginController extends Controller
     public function authenticate(Request $request)
     {
         $credentials = $request->validate([
-            'name' => 'required',
+            'email' => 'required',
             'password' => 'required'
         ]);
 
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
             if (Auth::user()) {
-                return redirect()->route('dashboard');
+                return redirect()->route('index');
             }
         }
-        return redirect()->route('auth.login');
+        return redirect()->route('login');
     }
 
     public function logout(Request $request)
@@ -35,6 +35,6 @@ class LoginController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return redirect()->route('auth.login');
+        return redirect()->route('login');
     }
 }
